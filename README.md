@@ -11,8 +11,8 @@
 [![Portfolio](https://img.shields.io/badge/🌐_Portfolio-prajitdatta.github.io-4F46E5?style=flat-square)](https://prajitdatta.github.io/)
 [![GitHub](https://img.shields.io/badge/GitHub-prajitdatta-181717?style=flat-square&logo=github)](https://github.com/prajitdatta)
 
-**[→ Open the Interactive Pipeline Explorer](https://prajitdatta.github.io/athenium/pipeline.html)**
-*See a contract clause flow through every layer of the system. No install. Runs in the browser.*
+**[→ Anthenium Website](https://prajitdatta.github.io/athenium/index.html)**
+
 
 ---
 
