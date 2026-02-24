@@ -17,7 +17,8 @@
 ---
 
 <div align="center">
-**[→ Anthenium Website](https://prajitdatta.github.io/athenium/index.html)**
+*[Anthenium Website](https://prajitdatta.github.io/athenium/index.html)*
+  
 *Built by [Prajit Datta](https://prajitdatta.github.io/) &nbsp;·&nbsp; [GitHub](https://github.com/prajitdatta)*
 
 </div>
