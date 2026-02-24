@@ -275,23 +275,10 @@ Below 0.85 confidence, `escalate_for_review` is true and the calling system rout
 
 ---
 
-## Architecture Decisions
-
-| Decision | Record |
-|----------|--------|
-| Mistral-7B over GPT-4o or Llama-3 | [ADR-001](docs/adrs/ADR-001-model-selection.md) |
-| LoRA rank r=16, targeting q_proj and v_proj | [ADR-002](docs/adrs/ADR-002-lora-rank.md) |
-| Three-tier evaluation pipeline | [ADR-003](docs/adrs/ADR-003-evaluation-framework.md) |
-| Pre-norm over post-norm | [ADR-004](docs/adrs/ADR-004-pre-norm.md) |
-| Merged weights over adapter-based serving | [ADR-005](docs/adrs/ADR-005-serving.md) |
-
----
-
 ## Repository Structure
 
 ```
 athenium/
-├── pipeline.html                       ← Live interactive pipeline explorer
 ├── src/
 │   ├── embeddings/
 │   │   └── positional_encoding.py      ← Token embeddings, sinusoidal PE, RoPE
@@ -317,7 +304,7 @@ athenium/
 │   ├── test_embeddings.py
 │   ├── test_normalization.py
 │   └── test_gpu_memory.py
-└── docs/adrs/
+
 ```
 
 
