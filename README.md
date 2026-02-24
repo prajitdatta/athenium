@@ -18,6 +18,7 @@
 
 <div align="center">
 [Anthenium Website](https://prajitdatta.github.io/athenium)
+*[Prajit Datta](https://prajitdatta.github.io/)*
   
 *Built by [Prajit Datta](https://prajitdatta.github.io/) &nbsp;·&nbsp; [GitHub](https://github.com/prajitdatta)*
 
