@@ -1310,60 +1310,6 @@ pytest tests/ -v</pre>
   </div>
 </div>
 
-<!-- ══════════════════ DEPLOY ══════════════════ -->
-<div class="section" id="deploy">
-  <div class="section-number">Deployment</div>
-  <h2>Publishing to GitHub — <em>five steps</em></h2>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div>
-        <h4>Create the repository</h4>
-        <p style="color:var(--muted);font-size:12px">Go to <strong>github.com/new</strong>. Name it <code>athenium</code>. Set to Public. Do <em>not</em> initialise with a README. Click Create repository.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div>
-        <h4>Push everything</h4>
-        <pre>cd athenium
-git init
-git add .
-git commit -m "feat: Athenium v1.0"
-git branch -M main
-git remote add origin https://github.com/prajitdatta/athenium.git
-git push -u origin main</pre>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div>
-        <h4>Enable GitHub Pages</h4>
-        <p style="color:var(--muted);font-size:12px">Settings → Pages → Source: Deploy from branch → Branch: main → Folder: / (root) → Save. Wait ~60 seconds.</p>
-        <p style="color:var(--muted);font-size:12px;margin-top:8px">This page will be live at: <strong>https://prajitdatta.github.io/athenium/pipeline.html</strong></p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div>
-        <h4>Set repository description and topics</h4>
-        <p style="color:var(--muted);font-size:12px">Click ⚙️ next to About on the repo page.</p>
-        <p style="color:var(--muted);font-size:12px;margin-top:6px"><strong>Description:</strong> Production transformer system for financial contract risk classification — attention from scratch, QLoRA fine-tuning, calibrated evaluation, FastAPI serving</p>
-        <div style="margin-top:8px;flex-wrap:wrap">
-          <span class="tag">transformer</span><span class="tag">pytorch</span><span class="tag">lora</span><span class="tag">qlora</span><span class="tag">nlp</span><span class="tag">financial-nlp</span><span class="tag">attention</span><span class="tag">peft</span><span class="tag">mistral</span><span class="tag">fastapi</span><span class="tag">layer-norm</span>
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div>
-        <h4>Pin the repository to your profile</h4>
-        <p style="color:var(--muted);font-size:12px">On your GitHub profile page, click "Customize your pins" and select <code>athenium</code>. It appears at the top of your profile with the description and star count.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ══════════════════ FOOTER ══════════════════ -->
 <footer>
