@@ -22,6 +22,7 @@
   --blue:   #1A3A6B;
   --mono:   'DM Mono', monospace;
   --serif:  'Fraunces', serif;
+  --pad: clamp(16px, 5vw, 60px);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,14 +56,18 @@ body {
   background-size: 48px 48px;
   pointer-events: none;
 }
+
+/* ── NAV ── */
 .masthead-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 60px;
+  padding: 20px var(--pad);
   border-bottom: 1px solid rgba(255,255,255,0.07);
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .nav-logo {
   font-family: var(--serif);
@@ -70,9 +75,38 @@ body {
   font-weight: 400;
   color: var(--paper);
   letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
 .nav-logo span { color: var(--gold2); }
-.nav-links { display: flex; gap: 32px; align-items: center; }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+  z-index: 20;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--paper);
+  transition: all 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
 .nav-links a {
   color: rgba(246,243,238,0.5);
   text-decoration: none;
@@ -80,17 +114,21 @@ body {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav-links a:hover { color: var(--paper); }
+
+/* ── MASTHEAD BODY ── */
 .masthead-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 60px 60px;
+  padding: 60px var(--pad) 60px;
   position: relative;
   z-index: 2;
   max-width: 1100px;
+  width: 100%;
 }
 .eyebrow {
   font-size: 10px;
@@ -108,10 +146,11 @@ body {
   width: 32px;
   height: 1px;
   background: var(--gold2);
+  flex-shrink: 0;
 }
 .masthead h1 {
   font-family: var(--serif);
-  font-size: clamp(42px, 6vw, 76px);
+  font-size: clamp(28px, 6vw, 76px);
   font-weight: 300;
   line-height: 1.06;
   color: var(--paper);
@@ -120,7 +159,7 @@ body {
 }
 .masthead h1 em { font-style: italic; color: var(--gold2); }
 .masthead-sub {
-  font-size: 15px;
+  font-size: clamp(13px, 2vw, 15px);
   color: rgba(246,243,238,0.55);
   max-width: 580px;
   line-height: 1.8;
@@ -128,20 +167,26 @@ body {
   font-family: var(--mono);
   font-weight: 300;
 }
+
+/* Metrics: wrap on small screens */
 .masthead-metrics {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   border: 1px solid rgba(255,255,255,0.1);
   width: fit-content;
+  max-width: 100%;
 }
 .metric-cell {
-  padding: 20px 32px;
+  padding: 16px 24px;
   border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  min-width: 100px;
 }
 .metric-cell:last-child { border-right: none; }
 .metric-val {
   font-family: var(--serif);
-  font-size: 30px;
+  font-size: clamp(22px, 3vw, 30px);
   font-weight: 300;
   color: var(--paper);
   line-height: 1;
@@ -152,11 +197,13 @@ body {
   color: rgba(246,243,238,0.4);
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
+
 .scroll-cue {
   position: absolute;
   bottom: 40px;
-  left: 60px;
+  left: var(--pad);
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -183,25 +230,25 @@ body {
   background: #0A0D0F;
   border-top: 1px solid rgba(255,255,255,0.06);
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 0;
 }
 .author-inner {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 28px 60px;
+  padding: 24px var(--pad);
   display: flex;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .author-avatar {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(196,144,48,0.4);
   flex-shrink: 0;
 }
-.author-text { flex: 1; }
+.author-text { flex: 1; min-width: 200px; }
 .author-name {
   font-family: var(--serif);
   font-size: 16px;
@@ -216,18 +263,18 @@ body {
   font-size: 11px;
   color: rgba(246,243,238,0.45);
   line-height: 1.6;
-  max-width: 560px;
 }
 .author-links {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 .author-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 7px 12px;
   font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -235,42 +282,16 @@ body {
   border: 1px solid rgba(255,255,255,0.12);
   color: rgba(246,243,238,0.6);
   transition: all 0.2s;
+  white-space: nowrap;
 }
-.author-link:hover {
-  border-color: var(--gold2);
-  color: var(--gold2);
-}
-.author-link svg { width: 12px; height: 12px; fill: currentColor; }
-
-/* ── DEMO CONTAINER ─────────────────────────────────── */
-.demo-input {
-  background: var(--paper2);
-  border: 1px solid var(--rule);
-  padding: 20px 28px;
-  font-family: var(--mono);
-  font-size: 14px;
-  color: var(--ink);
-  line-height: 1.8;
-  cursor: pointer;
-  user-select: none;
-  transition: border-color 0.2s, background 0.2s;
-  position: relative;
-}
-.demo-input:hover { border-color: var(--gold2); background: var(--paper); }
-.demo-input .clause-label {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 8px;
-  display: block;
-}
+.author-link:hover { border-color: var(--gold2); color: var(--gold2); }
+.author-link svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
 
 /* ── SECTIONS ────────────────────────────────────────── */
 .section {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 100px 60px;
+  padding: 80px var(--pad);
   border-bottom: 1px solid var(--rule);
 }
 .section:last-child { border-bottom: none; }
@@ -292,39 +313,38 @@ body {
 }
 .section h2 {
   font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(22px, 4vw, 44px);
   font-weight: 300;
-  line-height: 1.1;
+  line-height: 1.15;
   color: var(--ink);
   margin-bottom: 20px;
   max-width: 700px;
 }
 .section h2 em { font-style: italic; color: var(--gold); }
 .section-lead {
-  font-size: 15px;
+  font-size: clamp(13px, 1.5vw, 15px);
   color: var(--muted);
   max-width: 620px;
   line-height: 1.85;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
   font-weight: 300;
 }
 
-/* ── SPLIT LAYOUT ───────────────────────────────────── */
+/* ── SPLIT LAYOUTS ──────────────────────────────────── */
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 48px;
   align-items: start;
 }
-@media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
 .split-wide {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 60px;
+  gap: 48px;
   align-items: start;
 }
 
-/* ── PROSE BLOCKS ───────────────────────────────────── */
+/* ── PROSE ─────────────────────────────────────────── */
 .prose { max-width: 600px; }
 .prose p {
   font-size: 13.5px;
@@ -339,20 +359,24 @@ body {
   background: var(--ink);
   color: #C8B896;
   font-family: var(--mono);
-  font-size: 13px;
-  padding: 20px 28px;
+  font-size: clamp(10px, 1.5vw, 13px);
+  padding: 16px 20px;
   margin: 24px 0;
   border-left: 3px solid var(--gold2);
   line-height: 2;
+  overflow-x: auto;
+  white-space: pre;
 }
 
-/* ── INTERACTIVE WIDGETS ────────────────────────────── */
+/* ── WIDGETS ────────────────────────────────────────── */
 .widget {
   background: var(--paper2);
   border: 1px solid var(--rule);
-  padding: 28px;
+  padding: 24px;
   position: sticky;
   top: 40px;
+  min-width: 0; /* prevent overflow in grid */
+  overflow: hidden;
 }
 .widget-title {
   font-size: 9px;
@@ -367,99 +391,102 @@ body {
 /* Attention heatmap */
 .attn-tokens { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
 .attn-token {
-  padding: 4px 10px;
+  padding: 4px 8px;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.15s;
-  position: relative;
   user-select: none;
 }
 .attn-token:hover { border-color: var(--gold2); }
 .attn-token.selected { border-color: var(--gold2); background: rgba(196,144,48,0.15); }
-.attn-heatmap { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
-.heatmap-row { display: flex; align-items: center; gap: 6px; }
+.attn-heatmap { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; overflow: hidden; }
+.heatmap-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .heatmap-label {
-  width: 90px; font-size: 10px; color: var(--muted);
-  text-align: right; white-space: nowrap; overflow: hidden;
-  text-overflow: ellipsis; flex-shrink: 0;
+  width: 72px;
+  font-size: 9px;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
-.heatmap-bars { display: flex; gap: 2px; flex: 1; }
-.heatmap-cell { height: 18px; flex: 1; transition: background 0.3s; border-radius: 1px; }
-.heatmap-val { width: 32px; font-size: 10px; color: var(--muted); text-align: right; flex-shrink: 0; }
+.heatmap-bars { display: flex; gap: 2px; flex: 1; min-width: 0; }
+.heatmap-cell { height: 16px; flex: 1; transition: background 0.3s; border-radius: 1px; min-width: 0; }
+.heatmap-val { width: 28px; font-size: 9px; color: var(--muted); text-align: right; flex-shrink: 0; }
 
 /* PE canvas */
-.pe-canvas-wrap { overflow: hidden; border: 1px solid var(--rule); }
-canvas { display: block; }
+.pe-canvas-wrap { overflow: hidden; border: 1px solid var(--rule); width: 100%; }
+canvas { display: block; max-width: 100%; height: auto; }
 
 /* Memory bars */
 .mem-bars { display: flex; flex-direction: column; gap: 10px; }
-.mem-bar-row { display: flex; align-items: center; gap: 12px; }
-.mem-bar-label { width: 130px; font-size: 11px; color: var(--ink); flex-shrink: 0; }
-.mem-bar-track { flex: 1; height: 20px; background: var(--paper3); border: 1px solid var(--rule); position: relative; overflow: hidden; }
+.mem-bar-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.mem-bar-label { width: 120px; font-size: 10px; color: var(--ink); flex-shrink: 0; line-height: 1.4; }
+.mem-bar-track { flex: 1; height: 18px; background: var(--paper3); border: 1px solid var(--rule); position: relative; overflow: hidden; min-width: 0; }
 .mem-bar-fill { height: 100%; position: absolute; left: 0; top: 0; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-.mem-bar-val { width: 52px; font-size: 11px; color: var(--muted); text-align: right; flex-shrink: 0; }
+.mem-bar-val { width: 48px; font-size: 10px; color: var(--muted); text-align: right; flex-shrink: 0; }
 .mem-total-row { margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 12px; }
-.mem-total-label { width: 130px; font-size: 12px; font-weight: 500; color: var(--ink); }
-.mem-total-val { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--ink); }
+.mem-total-label { width: 120px; font-size: 12px; font-weight: 500; color: var(--ink); }
+.mem-total-val { font-family: var(--serif); font-size: 20px; font-weight: 300; color: var(--ink); }
 
 /* Toggle */
-.toggle-row { display: flex; gap: 4px; margin-bottom: 20px; }
+.toggle-row { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
 .toggle-btn {
-  padding: 7px 16px; font-family: var(--mono); font-size: 10px;
-  letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+  padding: 7px 12px; font-family: var(--mono); font-size: 10px;
+  letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer;
   border: 1px solid var(--rule); background: transparent; color: var(--muted); transition: all 0.15s;
 }
 .toggle-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .toggle-btn:hover:not(.active) { border-color: var(--muted); color: var(--ink); }
 
 /* Norm grid */
-.norm-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; margin-bottom: 12px; }
+.norm-grid-wrap { overflow-x: auto; }
+.norm-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; margin-bottom: 12px; min-width: 200px; }
 .norm-cell {
-  height: 32px; border-radius: 2px; transition: background 0.4s; cursor: default;
+  height: 28px; border-radius: 2px; transition: background 0.4s;
   display: flex; align-items: center; justify-content: center;
-  font-size: 9px; color: rgba(255,255,255,0.7);
+  font-size: 8px; color: rgba(255,255,255,0.7);
 }
 
 /* Risk output */
 .risk-output { border: 1px solid var(--rule); background: var(--paper); }
 .risk-label-row {
-  padding: 16px 20px; display: flex; align-items: center;
-  justify-content: space-between; border-bottom: 1px solid var(--rule);
+  padding: 14px 16px; display: flex; align-items: center;
+  justify-content: space-between; border-bottom: 1px solid var(--rule); flex-wrap: wrap; gap: 8px;
 }
-.risk-badge { padding: 4px 14px; font-size: 10px; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; }
+.risk-badge { padding: 4px 12px; font-size: 10px; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; }
 .risk-badge.HIGH    { background: #FDEAEA; color: #8B1A1A; border: 1px solid #D4A0A0; }
 .risk-badge.CRITICAL{ background: #3A0A0A; color: #FF9090; border: 1px solid #8B1A1A; }
 .risk-badge.MEDIUM  { background: #FDF3E3; color: #8B5A00; border: 1px solid #D4B080; }
 .risk-badge.LOW     { background: #EBF4EB; color: #1A5C2A; border: 1px solid #90C090; }
-.risk-confidence { font-size: 22px; font-family: var(--serif); font-weight: 300; }
-.risk-proba-bars { padding: 16px 20px; }
-.risk-proba-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.risk-proba-label { width: 68px; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-.risk-proba-track { flex: 1; height: 6px; background: var(--paper3); }
+.risk-confidence { font-size: 20px; font-family: var(--serif); font-weight: 300; }
+.risk-proba-bars { padding: 14px 16px; }
+.risk-proba-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.risk-proba-label { width: 60px; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+.risk-proba-track { flex: 1; height: 6px; background: var(--paper3); min-width: 0; }
 .risk-proba-fill { height: 100%; transition: width 0.6s; }
-.risk-proba-val { width: 34px; font-size: 10px; color: var(--muted); text-align: right; }
+.risk-proba-val { width: 32px; font-size: 10px; color: var(--muted); text-align: right; flex-shrink: 0; }
 
 /* Attribution */
 .attrib-list { display: flex; flex-direction: column; gap: 6px; }
-.attrib-row { display: flex; align-items: center; gap: 10px; }
-.attrib-token { width: 100px; font-size: 12px; font-family: var(--mono); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.attrib-bar-track { flex: 1; height: 8px; background: var(--paper3); }
+.attrib-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.attrib-token { width: 90px; font-size: 11px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+.attrib-bar-track { flex: 1; height: 8px; background: var(--paper3); min-width: 0; }
 .attrib-bar-fill { height: 100%; background: var(--gold2); transition: width 0.5s; }
-.attrib-pct { width: 36px; font-size: 10px; color: var(--muted); text-align: right; }
+.attrib-pct { width: 34px; font-size: 10px; color: var(--muted); text-align: right; flex-shrink: 0; }
 
 /* LoRA diagram */
-.lora-diagram { border: 1px solid var(--rule); padding: 24px; background: var(--paper); position: relative; }
-.matrix-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 8px; }
-.matrix-box { border: 1px solid; display: flex; align-items: center; justify-content: center; font-size: 13px; font-family: var(--mono); position: relative; }
-.lora-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.lora-diagram { border: 1px solid var(--rule); padding: 20px; background: var(--paper); overflow-x: auto; }
+.lora-boxes-row { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 .lora-op { font-size: 18px; color: var(--muted); }
 
 /* Code */
 pre {
   background: var(--ink); color: #C8B896; font-family: var(--mono);
-  font-size: 12px; line-height: 1.8; padding: 20px 24px;
+  font-size: 12px; line-height: 1.8; padding: 18px 20px;
   overflow-x: auto; border-left: 3px solid var(--gold2); margin: 20px 0;
 }
 code { font-family: var(--mono); }
@@ -469,8 +496,8 @@ code { font-family: var(--mono); }
 .code-num     { color: #8C7AC0; }
 
 /* API demo */
-.api-demo { background: #070B0F; border: 1px solid #1C2230; padding: 24px; }
-.api-line { font-family: var(--mono); font-size: 12px; line-height: 1.9; color: #8CA0C0; }
+.api-demo { background: #070B0F; border: 1px solid #1C2230; padding: 20px; overflow-x: auto; }
+.api-line { font-family: var(--mono); font-size: 11px; line-height: 1.9; color: #8CA0C0; white-space: nowrap; }
 .api-key { color: #7A9C5A; }
 .api-val-str { color: #C8B080; }
 .api-val-num { color: #9080C8; }
@@ -480,117 +507,66 @@ code { font-family: var(--mono); }
 
 /* Cards */
 .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 40px 0; }
-.card { background: var(--paper); padding: 28px 24px; }
-.card-num { font-family: var(--serif); font-size: 36px; font-weight: 300; color: var(--gold); margin-bottom: 8px; line-height: 1; }
+.card { background: var(--paper); padding: 24px 20px; }
+.card-num { font-family: var(--serif); font-size: clamp(24px, 4vw, 36px); font-weight: 300; color: var(--gold); margin-bottom: 8px; line-height: 1; }
 .card-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .card-desc { font-size: 12px; color: #5A5248; line-height: 1.7; }
 
 /* Tables */
 table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 12px; }
-th { text-align: left; padding: 10px 16px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); font-weight: 400; }
-td { padding: 12px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.6; }
+th { text-align: left; padding: 10px 12px; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); font-weight: 400; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.6; }
 tr:last-child td { border-bottom: none; }
 td:first-child { color: var(--gold); font-weight: 500; }
 td code { background: var(--paper3); padding: 1px 6px; font-size: 11px; }
 
+/* Scrollable table wrapper for mobile */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
 /* Filetree */
-.filetree { background: var(--ink); color: #A0B0C8; font-family: var(--mono); font-size: 12px; line-height: 2; padding: 24px 28px; }
+.filetree { background: var(--ink); color: #A0B0C8; font-family: var(--mono); font-size: 12px; line-height: 2; padding: 20px 24px; overflow-x: auto; }
 .filetree .dir { color: var(--gold2); }
 .filetree .highlight { color: #F0EDE8; }
 .filetree .comment { color: #3A4A5A; }
 
 /* Deploy steps */
 .steps { counter-reset: step; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--rule); }
-.step { counter-increment: step; padding: 28px 32px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 40px 1fr; gap: 24px; align-items: start; }
+.step { counter-increment: step; padding: 24px 24px; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 36px 1fr; gap: 20px; align-items: start; }
 .step:last-child { border-bottom: none; }
-.step-num { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--gold); line-height: 1; padding-top: 4px; }
+.step-num { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--gold); line-height: 1; padding-top: 2px; }
 .step h4 { font-size: 13px; font-weight: 500; margin-bottom: 8px; }
 .step p, .step pre { font-size: 12px; }
 .step pre { margin: 10px 0 0; }
 
 /* Footer */
-footer {
-  background: var(--ink);
-  color: rgba(246,243,238,0.35);
-  padding: 0;
-  font-size: 11px;
-}
+footer { background: var(--ink); color: rgba(246,243,238,0.35); font-size: 11px; }
 .footer-top {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 48px 60px 36px;
+  max-width: 1100px; margin: 0 auto;
+  padding: 48px var(--pad) 36px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.footer-brand { }
-.footer-brand-logo {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 300;
-  color: rgba(246,243,238,0.7);
-  margin-bottom: 10px;
-}
+.footer-brand-logo { font-family: var(--serif); font-size: 20px; font-weight: 300; color: rgba(246,243,238,0.7); margin-bottom: 10px; }
 .footer-brand-logo span { color: var(--gold2); }
-.footer-brand-desc {
-  font-size: 11px;
-  color: rgba(246,243,238,0.3);
-  line-height: 1.8;
-  max-width: 220px;
-}
-.footer-col-title {
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(246,243,238,0.25);
-  margin-bottom: 16px;
-}
-.footer-col a {
-  display: block;
-  color: rgba(246,243,238,0.4);
-  text-decoration: none;
-  font-size: 11px;
-  line-height: 2.2;
-  transition: color 0.2s;
-}
+.footer-brand-desc { font-size: 11px; color: rgba(246,243,238,0.3); line-height: 1.8; }
+.footer-col-title { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(246,243,238,0.25); margin-bottom: 16px; }
+.footer-col a { display: block; color: rgba(246,243,238,0.4); text-decoration: none; font-size: 11px; line-height: 2.2; transition: color 0.2s; }
 .footer-col a:hover { color: var(--gold2); }
-
-/* Author card in footer */
-.footer-author {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.footer-author-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(196,144,48,0.3);
-  flex-shrink: 0;
-}
-.footer-author-name {
-  font-family: var(--serif);
-  font-size: 14px;
-  font-weight: 300;
-  color: rgba(246,243,238,0.65);
-  margin-bottom: 2px;
-}
+.footer-author { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+.footer-author-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(196,144,48,0.3); flex-shrink: 0; }
+.footer-author-name { font-family: var(--serif); font-size: 14px; font-weight: 300; color: rgba(246,243,238,0.65); margin-bottom: 2px; }
 .footer-author-name span { color: var(--gold2); }
 .footer-author-role { font-size: 10px; color: rgba(246,243,238,0.3); line-height: 1.5; }
 .footer-bottom {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 20px 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+  max-width: 1100px; margin: 0 auto;
+  padding: 20px var(--pad);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
 }
 .footer-bottom-left { font-size: 11px; color: rgba(246,243,238,0.25); }
-.footer-bottom-right { display: flex; gap: 20px; }
+.footer-bottom-right { display: flex; gap: 20px; flex-wrap: wrap; }
 .footer-bottom-right a { font-size: 10px; color: rgba(246,243,238,0.3); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
 .footer-bottom-right a:hover { color: var(--gold2); }
 
@@ -600,14 +576,122 @@ footer {
 .inline-file { display: inline-flex; align-items: center; gap: 6px; background: var(--paper3); border: 1px solid var(--rule); padding: 2px 10px; font-size: 11px; font-family: var(--mono); color: var(--gold); text-decoration: none; margin: 2px; }
 .inline-file:hover { border-color: var(--gold2); }
 
+/* Animations */
 @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-.fade-in { animation: fadeUp 0.6s ease forwards; }
 .masthead-body > * { opacity: 0; animation: fadeUp 0.7s ease forwards; }
 .masthead-body > *:nth-child(1) { animation-delay: 0.1s; }
 .masthead-body > *:nth-child(2) { animation-delay: 0.25s; }
 .masthead-body > *:nth-child(3) { animation-delay: 0.4s; }
 .masthead-body > *:nth-child(4) { animation-delay: 0.55s; }
 .masthead-body > *:nth-child(5) { animation-delay: 0.7s; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+══════════════════════════════════════════════ */
+
+/* Medium: tablets / small desktops */
+@media (max-width: 900px) {
+  .split-wide {
+    grid-template-columns: 1fr;
+  }
+  .split-wide .widget { position: static; }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Small: large phones / small tablets */
+@media (max-width: 700px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .split .widget { position: static; }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 16px var(--pad);
+    z-index: 50;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    width: 100%;
+  }
+  .nav-links a:last-child { border-bottom: none; }
+
+  .masthead-nav { position: relative; }
+
+  .prose-math {
+    font-size: 10px;
+  }
+
+  .lora-boxes-row { justify-content: flex-start; }
+
+  .mem-bar-label { width: 100px; font-size: 9px; }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .step {
+    grid-template-columns: 28px 1fr;
+    gap: 14px;
+    padding: 20px 16px;
+  }
+
+  .api-demo { padding: 14px; }
+  .api-line { font-size: 10px; }
+
+  .widget { padding: 16px; }
+}
+
+/* Extra small: phones */
+@media (max-width: 480px) {
+  .masthead h1 { font-size: clamp(24px, 8vw, 36px); }
+
+  .masthead-metrics { width: 100%; }
+  .metric-cell {
+    flex: 1 1 calc(50% - 1px);
+    padding: 14px 16px;
+  }
+  /* Make 4 cells into 2×2 grid */
+  .masthead-metrics .metric-cell:nth-child(2) { border-right: none; }
+
+  .author-inner { flex-direction: column; }
+  .author-links { width: 100%; }
+  .author-link { flex: 1; justify-content: center; }
+
+  .section { padding: 48px var(--pad); }
+
+  .heatmap-label { width: 56px; font-size: 8px; }
+
+  .mem-bar-label { width: 86px; font-size: 8px; }
+  .mem-bar-val { font-size: 9px; width: 40px; }
+
+  .filetree { font-size: 10px; }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Canvas responsiveness — handled via JS resize */
 </style>
 </head>
 <body>
@@ -617,7 +701,10 @@ footer {
   <div class="masthead-grid"></div>
   <nav class="masthead-nav">
     <div class="nav-logo">Athe<span>nium</span></div>
-    <div class="nav-links">
+    <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
       <a href="#mechanism">Attention</a>
       <a href="#embeddings">Embeddings</a>
       <a href="#normalization">Normalisation</a>
@@ -730,14 +817,12 @@ footer {
       <p><strong>Tokenisation</strong> breaks the raw string into subword units using a SentencePiece vocabulary of 32,000 entries. The clause <em>"The Borrower shall not declare any Event of Default"</em> becomes a sequence of integer IDs. Subword tokenisation means the model never encounters a truly unknown word — even rare legal terms are decomposed into recognised units.</p>
       <p><strong>Embedding lookup</strong> converts each token ID into a dense 4,096-dimensional vector by indexing into a learned table of shape (32,000 × 4,096). At this point the vectors are <em>context-free</em> — <code>default</code> has the same embedding whether it appears in "event of default" or "the default setting." The transformer blocks fix this.</p>
       <p><strong>The word order problem.</strong> This is the part that surprises engineers encountering transformers for the first time. The attention computation treats the input as an unordered set. Rearrange the tokens and you get the same output, rearranged identically. "The dog bit the man" and "the man bit the dog" look identical to the bare mathematics. This is resolved by <em>positional encoding</em> — a unique signal added to each token's embedding before the first transformer layer.</p>
-      <div class="prose-math">
-PE(pos, 2i)   = sin( pos / 10000^(2i / d_model) )
+      <div class="prose-math">PE(pos, 2i)   = sin( pos / 10000^(2i / d_model) )
 PE(pos, 2i+1) = cos( pos / 10000^(2i / d_model) )
 
 Each dimension pair oscillates at a different frequency.
 Low dims: sensitive to local position (adjacent tokens)
-High dims: sensitive to global position (clause structure)
-</div>
+High dims: sensitive to global position (clause structure)</div>
       <p>The original sinusoidal approach (Vaswani et al., 2017) adds a fixed, parameter-free signal. Each position gets a unique fingerprint across 4,096 dimensions, constructed from sin/cos waves of varying frequency. The encoding works for any sequence length, including lengths not seen during training.</p>
       <p>Athenium's backbone — Mistral-7B — uses <strong>Rotary Position Embedding (RoPE)</strong>. Instead of adding position to the embeddings, RoPE <em>rotates</em> the Query and Key vectors inside each attention head. The critical property: the dot product between two rotated vectors depends only on their <em>relative</em> distance, not their absolute positions. The model develops a genuine sense of how far apart two tokens are in the sequence, which generalises better to long documents.</p>
       <div style="margin-top:20px"><span class="inline-file">src/embeddings/positional_encoding.py</span></div>
@@ -745,7 +830,7 @@ High dims: sensitive to global position (clause structure)
     <div>
       <div class="widget">
         <div class="widget-title">Sinusoidal Positional Encoding — first 64 dimensions</div>
-        <div class="pe-canvas-wrap"><canvas id="peCanvas" width="380" height="220"></canvas></div>
+        <div class="pe-canvas-wrap"><canvas id="peCanvas"></canvas></div>
         <div style="margin-top:14px;font-size:10px;color:var(--muted);line-height:1.8">
           Each row is one sequence position (0–15).<br>
           Each column is one embedding dimension.<br>
@@ -756,21 +841,21 @@ High dims: sensitive to global position (clause structure)
       <div class="widget" style="margin-top:20px">
         <div class="widget-title">Token embedding lookup</div>
         <div style="font-size:12px;color:var(--muted);line-height:1.9">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
             <div style="background:var(--ink);color:var(--gold2);padding:4px 10px;font-size:13px">"Event"</div>
             <div style="color:var(--rule)">→</div>
             <div style="background:var(--paper3);border:1px solid var(--rule);padding:4px 10px;font-size:11px">ID: 9134</div>
             <div style="color:var(--rule)">→</div>
             <div style="background:var(--paper3);border:1px solid var(--rule);padding:4px 10px;font-size:11px">ℝ<sup>4096</sup></div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
             <div style="background:var(--ink);color:var(--gold2);padding:4px 10px;font-size:13px">"default"</div>
             <div style="color:var(--rule)">→</div>
             <div style="background:var(--paper3);border:1px solid var(--rule);padding:4px 10px;font-size:11px">ID: 2305</div>
             <div style="color:var(--rule)">→</div>
             <div style="background:var(--paper3);border:1px solid var(--rule);padding:4px 10px;font-size:11px">ℝ<sup>4096</sup></div>
           </div>
-          <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
             <div style="background:var(--ink);color:var(--gold2);padding:4px 10px;font-size:13px">"Borrower"</div>
             <div style="color:var(--rule)">→</div>
             <div style="background:var(--paper3);border:1px solid var(--rule);padding:4px 10px;font-size:11px">ID: 6711</div>
@@ -817,12 +902,12 @@ Attention(Q, K, V) = softmax( Q·Kᵀ / √d_k ) · V</div>
         <div style="font-size:10px;color:var(--muted);margin-bottom:12px">Attention weights (simulated from a Mistral-7B head trained on contract data)</div>
         <div class="attn-heatmap" id="attnHeatmap"></div>
       </div>
-      <div class="widget" style="margin-top:20px">
+      <div class="widget" style="margin-top:20px;position:static">
         <div class="widget-title">Multi-Head Attention — 32 parallel heads</div>
         <div class="prose" style="max-width:100%">
           <p style="font-size:12px">A single head models one relationship type. Financial contracts require many simultaneously: syntactic dependency, coreference, legal defined-term boundaries, jurisdictional scope. Athenium runs <strong>32 attention heads in parallel</strong>, each operating in a 128-dimensional subspace.</p>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px">
           <div style="border:1px solid var(--rule);padding:10px 12px;font-size:11px;line-height:1.7">
             <div style="color:var(--gold);font-weight:500;margin-bottom:4px">Heads 0–1</div>
             <div style="color:var(--muted)">Syntactic bigrams<br>grammatical structure</div>
@@ -856,8 +941,8 @@ Attention(Q, K, V) = softmax( Q·Kᵀ / √d_k ) · V</div>
   <div class="split">
     <div class="prose">
       <p>The complete data flow through one transformer block:</p>
-      <div class="prose-math">x₁ = x  +  MHA( LayerNorm(x) )       ← attention sublayer
-x₂ = x₁ +  FFN( LayerNorm(x₁) )     ← feed-forward sublayer</div>
+      <div class="prose-math">x₁ = x  +  MHA( LayerNorm(x) )
+x₂ = x₁ +  FFN( LayerNorm(x₁) )</div>
       <p><strong>Residual connections</strong> are what make deep networks trainable. Each block learns only the <em>delta</em> — the modification to the representation — rather than the full representation from scratch. Gradients flow through the addition operator without transformation, reaching early layers cleanly. Without residuals, gradients in 32-layer networks vanish exponentially.</p>
       <p><strong>Pre-norm vs post-norm.</strong> The original Vaswani et al. (2017) paper placed LayerNorm after the residual addition (post-norm). Modern large-model training uses pre-norm: LayerNorm is applied <em>before</em> each sublayer, before the residual addition. Pre-norm maintains controlled activation magnitudes at every depth, making deep networks stable without careful learning rate warmup schedules. Mistral, LLaMA, and GPT-2 all use pre-norm.</p>
       <p><strong>The feed-forward network</strong> is two linear layers with a nonlinearity between them, applied independently to each token position. It uses SwiGLU activation (Mistral) — a gated activation unit that outperforms ReLU on language tasks. The FFN is not just a compression layer — research has shown these layers act as <em>key-value memories</em>, storing factual associations learned during pretraining (Geva et al., 2021). After fine-tuning, they also encode domain-specific patterns.</p>
@@ -866,32 +951,32 @@ x₂ = x₁ +  FFN( LayerNorm(x₁) )     ← feed-forward sublayer</div>
     <div>
       <div class="widget">
         <div class="widget-title">Residual stream — activation norms across 32 layers</div>
-        <canvas id="residualCanvas" width="380" height="180"></canvas>
+        <canvas id="residualCanvas"></canvas>
         <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.8">
           Activation norms remain bounded across all 32 layers due to pre-norm.<br>
           Post-norm architectures show exponential growth above ~12 layers.
         </div>
       </div>
-      <div class="widget" style="margin-top:20px">
+      <div class="widget" style="margin-top:20px;position:static">
         <div class="widget-title">Block anatomy</div>
         <div style="font-size:11px;line-height:2;color:var(--muted)">
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)">
-            <div style="width:120px;color:var(--ink);font-weight:500">LayerNorm</div><div>Pre-normalise input — keeps activations stable</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap">
+            <div style="width:110px;color:var(--ink);font-weight:500;flex-shrink:0">LayerNorm</div><div>Pre-normalise input — keeps activations stable</div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)">
-            <div style="width:120px;color:var(--ink);font-weight:500">Multi-Head Attn</div><div>32 heads, d_k=128 each — routes between tokens</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap">
+            <div style="width:110px;color:var(--ink);font-weight:500;flex-shrink:0">Multi-Head Attn</div><div>32 heads, d_k=128 each — routes between tokens</div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)">
-            <div style="width:120px;color:var(--gold);font-weight:500">+ Residual</div><div>Add back to x — gradient highway</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap">
+            <div style="width:110px;color:var(--gold);font-weight:500;flex-shrink:0">+ Residual</div><div>Add back to x — gradient highway</div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)">
-            <div style="width:120px;color:var(--ink);font-weight:500">LayerNorm</div><div>Pre-normalise again before FFN</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap">
+            <div style="width:110px;color:var(--ink);font-weight:500;flex-shrink:0">LayerNorm</div><div>Pre-normalise again before FFN</div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule)">
-            <div style="width:120px;color:var(--ink);font-weight:500">FFN (SwiGLU)</div><div>4096 → 14336 → 4096, per token</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--rule);flex-wrap:wrap">
+            <div style="width:110px;color:var(--ink);font-weight:500;flex-shrink:0">FFN (SwiGLU)</div><div>4096 → 14336 → 4096, per token</div>
           </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:8px 0">
-            <div style="width:120px;color:var(--gold);font-weight:500">+ Residual</div><div>Final output of one block → next block</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;flex-wrap:wrap">
+            <div style="width:110px;color:var(--gold);font-weight:500;flex-shrink:0">+ Residual</div><div>Final output of one block → next block</div>
           </div>
         </div>
       </div>
@@ -908,16 +993,16 @@ x₂ = x₁ +  FFN( LayerNorm(x₁) )     ← feed-forward sublayer</div>
   <div class="split">
     <div class="prose">
       <p><strong>Batch Normalisation</strong> (Ioffe & Szegedy, 2015) normalises across the <em>batch dimension</em>. For each feature dimension, it computes the mean and variance across all samples in the current mini-batch, then normalises using those statistics:</p>
-      <div class="prose-math">μ_d = mean( x[:, d] )        ← across all samples in batch
+      <div class="prose-math">μ_d = mean( x[:, d] )
 σ_d = std( x[:, d] )
 x̂   = (x − μ) / (σ + ε)
-y   = γ · x̂ + β             ← learnable scale (γ) and shift (β)</div>
+y   = γ · x̂ + β</div>
       <p>BatchNorm requires a running mean and variance tracked during training, used at inference time since a single sample has no meaningful batch statistics. This creates a train/eval discrepancy. At small batch sizes, the estimates become noisy. For variable-length padded sequences, padded positions contaminate the statistics for real tokens. These problems make BatchNorm unsuitable for transformer architectures.</p>
       <p><strong>Layer Normalisation</strong> (Ba et al., 2016) normalises across the <em>feature dimension</em> — for each individual token, independently of every other token and every other sample:</p>
-      <div class="prose-math">μ = mean( x[b, s, :] )        ← across features, for this one token
+      <div class="prose-math">μ = mean( x[b, s, :] )
 σ = std( x[b, s, :] )
 x̂  = (x − μ) / (σ + ε)
-y  = γ · x̂ + β               ← same learnable γ, β — per feature</div>
+y  = γ · x̂ + β</div>
       <p>LayerNorm has no running statistics. The same computation runs at training and inference time — no discrepancy. It works at batch size = 1. Different sequence positions are normalised completely independently, which is exactly the right behaviour for a sequence model. Athenium uses LayerNorm with ε = 1e-12, placed before each sublayer in the pre-norm configuration.</p>
       <div style="margin-top:20px">
         <span class="inline-file">src/internals/normalization.py</span>
@@ -932,7 +1017,7 @@ y  = γ · x̂ + β               ← same learnable γ, β — per feature</div
           <button class="toggle-btn" id="btnLayer" onclick="showNorm('layer')">Layer Norm</button>
         </div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:14px" id="normDesc">Normalising across the batch (↓ columns). Each feature is normalised using statistics from all 4 samples.</div>
-        <div style="display:flex;gap:3px;margin-bottom:3px;padding-left:82px">
+        <div style="display:flex;gap:3px;margin-bottom:3px;padding-left:82px;overflow:hidden">
           <div style="flex:1;font-size:9px;color:var(--muted);text-align:center">f0</div>
           <div style="flex:1;font-size:9px;color:var(--muted);text-align:center">f1</div>
           <div style="flex:1;font-size:9px;color:var(--muted);text-align:center">f2</div>
@@ -948,7 +1033,7 @@ y  = γ · x̂ + β               ← same learnable γ, β — per feature</div
             <strong>BatchNorm</strong>: uses batch statistics → breaks at inference time when batch_size=1. Padding contaminates real token statistics in variable-length sequences.
           </div>
         </div>
-        <canvas id="normCanvas" width="380" height="120" style="margin-top:16px;display:block"></canvas>
+        <canvas id="normCanvas" style="margin-top:16px;display:block;width:100%;max-width:100%"></canvas>
       </div>
     </div>
   </div>
@@ -974,13 +1059,15 @@ y  = γ · x̂ + β               ← same learnable γ, β — per feature</div
       <p><strong>QLoRA</strong> additionally quantises the frozen base model weights to 4-bit NormalFloat (NF4) format, halving memory again. The adapter weights remain in bf16. Gradients and Adam optimizer states are computed only for the 8.4M LoRA parameters — a tiny fraction of the total.</p>
       <div style="margin-top:24px">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Rank ablation — 3,000 held-out contracts</div>
-        <table>
-          <tr><th>Rank r</th><th>Trainable Params</th><th>Macro F1</th><th>Train Time</th></tr>
-          <tr><td>r=4</td><td>2.1M</td><td>0.912</td><td>1h 20m</td></tr>
-          <tr><td>r=8</td><td>4.2M</td><td>0.947</td><td>2h 10m</td></tr>
-          <tr style="background:rgba(196,144,48,0.06)"><td><strong>r=16 ←</strong></td><td><strong>8.4M</strong></td><td><strong>0.971</strong></td><td><strong>3h 45m</strong></td></tr>
-          <tr><td>r=32</td><td>16.8M</td><td>0.974</td><td>7h 30m</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Rank r</th><th>Trainable Params</th><th>Macro F1</th><th>Train Time</th></tr>
+            <tr><td>r=4</td><td>2.1M</td><td>0.912</td><td>1h 20m</td></tr>
+            <tr><td>r=8</td><td>4.2M</td><td>0.947</td><td>2h 10m</td></tr>
+            <tr style="background:rgba(196,144,48,0.06)"><td><strong>r=16 ←</strong></td><td><strong>8.4M</strong></td><td><strong>0.971</strong></td><td><strong>3h 45m</strong></td></tr>
+            <tr><td>r=32</td><td>16.8M</td><td>0.974</td><td>7h 30m</td></tr>
+          </table>
+        </div>
         <div style="font-size:11px;color:var(--muted)">r=16 is the inflection point. r=32 adds 0.3% F1 at 2× compute.</div>
       </div>
       <div style="margin-top:20px">
@@ -992,20 +1079,20 @@ y  = γ · x̂ + β               ← same learnable γ, β — per feature</div
       <div class="widget">
         <div class="widget-title">LoRA weight decomposition — interactive</div>
         <div class="lora-diagram">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:20px">The forward pass adds the low-rank update to the frozen base weight:</div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:16px">The forward pass adds the low-rank update to the frozen base weight:</div>
+          <div class="lora-boxes-row">
             <div style="text-align:center">
-              <div style="background:var(--paper3);border:2px solid var(--rule);width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)">W₀<br><span style="font-size:9px">4096×4096<br>frozen</span></div>
+              <div style="background:var(--paper3);border:2px solid var(--rule);width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)">W₀<br><span style="font-size:9px">4096×4096<br>frozen</span></div>
             </div>
-            <div style="font-size:20px;color:var(--muted)">+</div>
+            <div class="lora-op">+</div>
             <div style="display:flex;align-items:center;gap:6px">
-              <div style="background:#EBF4EB;border:1px solid #90C090;width:22px;height:70px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);writing-mode:vertical-rl">B 4096×16</div>
+              <div style="background:#EBF4EB;border:1px solid #90C090;width:20px;height:64px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--green);writing-mode:vertical-rl">B 4096×16</div>
               <div style="font-size:14px;color:var(--muted)">·</div>
-              <div style="background:#EBF4EB;border:1px solid #90C090;width:70px;height:22px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green)">A 16×4096</div>
+              <div style="background:#EBF4EB;border:1px solid #90C090;width:64px;height:20px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--green)">A 16×4096</div>
             </div>
-            <div style="font-size:20px;color:var(--muted)">=</div>
+            <div class="lora-op">=</div>
             <div style="text-align:center">
-              <div style="background:var(--paper3);border:2px solid var(--gold2);width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold)">W<br><span style="font-size:9px">merged<br>after training</span></div>
+              <div style="background:var(--paper3);border:2px solid var(--gold2);width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold)">W<br><span style="font-size:9px">merged<br>after train</span></div>
             </div>
           </div>
           <div style="font-size:10px;line-height:2;color:var(--muted)">
@@ -1016,7 +1103,7 @@ y  = γ · x̂ + β               ← same learnable γ, β — per feature</div
         </div>
         <div class="widget" style="margin-top:20px;position:static">
           <div class="widget-title">Training setup (Athenium configuration)</div>
-          <pre style="margin:0;font-size:11px;border-left:none;background:#0A0C10;padding:16px">
+          <pre style="margin:0;font-size:11px;border-left:none;background:#0A0C10;padding:14px">
 <span class="code-comment"># QLoRA: 4-bit base + bf16 adapters</span>
 model = AutoModelForCausalLM.from_pretrained(
   <span class="code-string">"mistralai/Mistral-7B-v0.1"</span>,
@@ -1045,12 +1132,12 @@ lora_cfg = LoraConfig(
   <div class="split-wide">
     <div class="prose">
       <p>Training a 7.24B parameter language model in full fp32 precision with the Adam optimiser requires four distinct memory allocations of equal size:</p>
-      <div class="prose-math">Model weights:     N × 4 bytes (fp32)     = 1× weight size
-Gradients:         N × 4 bytes (fp32)     = 1× weight size
-Adam m (1st mom.): N × 4 bytes (fp32)     = 1× weight size
-Adam v (2nd mom.): N × 4 bytes (fp32)     = 1× weight size
-───────────────────────────────────────────────────────────
-Total:                                    = 4× weight size</div>
+      <div class="prose-math">Model weights:     N × 4 bytes (fp32)  = 1× weight
+Gradients:         N × 4 bytes (fp32)  = 1× weight
+Adam m (1st mom.): N × 4 bytes (fp32)  = 1× weight
+Adam v (2nd mom.): N × 4 bytes (fp32)  = 1× weight
+─────────────────────────────────────────────────
+Total:                                  = 4× weight</div>
       <p>The four-times rule: full fp32 training always costs approximately 4× the raw weight memory. For a 7.24B parameter model: weights are 27.0 GB; total is ~108 GB — requiring two A100 80GB GPUs.</p>
       <p><strong>Why Adam states must stay in fp32.</strong> Adam's first moment (m) and second moment (v) are running averages that accumulate small updates over thousands of gradient steps. In fp16 or bf16, tiny increments underflow to zero — after several thousand steps, the moments become meaningless and training diverges. Adam optimizer states are always kept in fp32, even in mixed-precision training regimes. This is the "master weights" pattern.</p>
       <p><strong>What gradients cost.</strong> One gradient tensor per trainable parameter, same dtype as the compute precision. For full fine-tuning in fp32, this doubles the weight memory alone.</p>
@@ -1061,7 +1148,7 @@ Total:                                    = 4× weight size</div>
       </div>
     </div>
     <div>
-      <div class="widget">
+      <div class="widget" style="position:static">
         <div class="widget-title">GPU memory breakdown — switch training regime</div>
         <div class="toggle-row">
           <button class="toggle-btn active" id="btnFP32" onclick="showMemory('fp32')">Full fp32</button>
@@ -1071,17 +1158,17 @@ Total:                                    = 4× weight size</div>
         <div class="mem-bars" id="memBars"></div>
         <div class="mem-total-row">
           <div class="mem-total-label">Peak VRAM</div>
-          <div class="mem-total-val" id="memTotal">108.0 GB</div>
+          <div class="mem-total-val" id="memTotal">108 GB</div>
         </div>
         <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);font-size:10px;color:var(--muted);line-height:1.9" id="memNote">Requires 2× A100 80GB or 4× A40 40GB. Not practical for rapid iteration.</div>
       </div>
       <div class="widget" style="margin-top:20px;position:static">
         <div class="widget-title">The 4× rule — any model size</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)">
-          <div style="background:var(--paper);padding:14px 16px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">1B params</div><div style="font-family:var(--serif);font-size:20px;font-weight:300">~15 GB</div></div>
-          <div style="background:var(--paper);padding:14px 16px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">7B params</div><div style="font-family:var(--serif);font-size:20px;font-weight:300">~108 GB</div></div>
-          <div style="background:var(--paper);padding:14px 16px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">13B params</div><div style="font-family:var(--serif);font-size:20px;font-weight:300">~200 GB</div></div>
-          <div style="background:var(--paper);padding:14px 16px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">70B params</div><div style="font-family:var(--serif);font-size:20px;font-weight:300">~1,100 GB</div></div>
+          <div style="background:var(--paper);padding:12px 14px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">1B params</div><div style="font-family:var(--serif);font-size:18px;font-weight:300">~15 GB</div></div>
+          <div style="background:var(--paper);padding:12px 14px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">7B params</div><div style="font-family:var(--serif);font-size:18px;font-weight:300">~108 GB</div></div>
+          <div style="background:var(--paper);padding:12px 14px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">13B params</div><div style="font-family:var(--serif);font-size:18px;font-weight:300">~200 GB</div></div>
+          <div style="background:var(--paper);padding:12px 14px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">70B params</div><div style="font-family:var(--serif);font-size:18px;font-weight:300">~1,100 GB</div></div>
         </div>
         <div style="margin-top:10px;font-size:10px;color:var(--muted)">fp32 full fine-tune. Excludes activations (batch-size dependent).</div>
       </div>
@@ -1102,13 +1189,15 @@ Total:                                    = 4× weight size</div>
       <p><strong>88.3% auto-processed</strong> at a confidence threshold of 0.85. The remaining 11.7% are escalated with the full probability distribution and attribution map. Critically: zero CRITICAL-risk contracts were misclassified as LOW or MEDIUM in the auto-processed set.</p>
       <div style="margin-top:32px">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">vs. GPT-4o zero-shot baseline (same held-out set)</div>
-        <table>
-          <tr><th>Metric</th><th>GPT-4o</th><th>Athenium</th><th>Δ</th></tr>
-          <tr><td>Macro F1</td><td>0.831</td><td><strong>0.971</strong></td><td style="color:var(--green)">+14%</td></tr>
-          <tr><td>P95 Latency</td><td>~820ms</td><td><strong>118ms</strong></td><td style="color:var(--green)">7× faster</td></tr>
-          <tr><td>Cost / 1K docs</td><td>$14.20</td><td><strong>$0.18</strong></td><td style="color:var(--green)">79× cheaper</td></tr>
-          <tr><td>Data residency</td><td>External API</td><td><strong>Self-hosted</strong></td><td style="color:var(--green)">✓</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Metric</th><th>GPT-4o</th><th>Athenium</th><th>Δ</th></tr>
+            <tr><td>Macro F1</td><td>0.831</td><td><strong>0.971</strong></td><td style="color:var(--green)">+14%</td></tr>
+            <tr><td>P95 Latency</td><td>~820ms</td><td><strong>118ms</strong></td><td style="color:var(--green)">7× faster</td></tr>
+            <tr><td>Cost / 1K docs</td><td>$14.20</td><td><strong>$0.18</strong></td><td style="color:var(--green)">79× cheaper</td></tr>
+            <tr><td>Data residency</td><td>External API</td><td><strong>Self-hosted</strong></td><td style="color:var(--green)">✓</td></tr>
+          </table>
+        </div>
       </div>
       <span class="inline-file">src/evaluation/metrics.py</span>
     </div>
@@ -1125,7 +1214,7 @@ Total:                                    = 4× weight size</div>
             <div class="risk-confidence" id="riskConf">92.3%</div>
           </div>
           <div class="risk-proba-bars" id="risqProbas"></div>
-          <div style="padding:0 20px 16px">
+          <div style="padding:0 16px 14px">
             <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Attribution — top terms by attention weight</div>
             <div class="attrib-list" id="attribList"></div>
           </div>
@@ -1188,18 +1277,20 @@ Total:                                    = 4× weight size</div>
     <div>
       <div class="widget" style="position:static">
         <div class="widget-title">Architecture Decision Records</div>
-        <table style="margin:0">
-          <tr><th>ADR</th><th>Decision</th></tr>
-          <tr><td>001</td><td>Mistral-7B selected over GPT-4o API and Llama-3</td></tr>
-          <tr><td>002</td><td>LoRA r=16, target q_proj + v_proj only</td></tr>
-          <tr><td>003</td><td>Three-tier evaluation: automated → LLM judge → human</td></tr>
-          <tr><td>004</td><td>Pre-norm transformer block (not post-norm)</td></tr>
-          <tr><td>005</td><td>FastAPI + merged weights + vLLM backend</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table style="margin:0">
+            <tr><th>ADR</th><th>Decision</th></tr>
+            <tr><td>001</td><td>Mistral-7B selected over GPT-4o API and Llama-3</td></tr>
+            <tr><td>002</td><td>LoRA r=16, target q_proj + v_proj only</td></tr>
+            <tr><td>003</td><td>Three-tier evaluation: automated → LLM judge → human</td></tr>
+            <tr><td>004</td><td>Pre-norm transformer block (not post-norm)</td></tr>
+            <tr><td>005</td><td>FastAPI + merged weights + vLLM backend</td></tr>
+          </table>
+        </div>
       </div>
       <div class="widget" style="margin-top:20px;position:static">
         <div class="widget-title">Run it locally</div>
-        <pre style="margin:0;font-size:11px;border-left:none;background:#0A0C10;padding:16px">
+        <pre style="margin:0;font-size:11px;border-left:none;background:#0A0C10;padding:14px">
 <span class="code-comment"># Attention trace — no GPU needed</span>
 python scripts/trace_attention.py
 
@@ -1239,7 +1330,7 @@ pytest tests/ -v</pre>
         <pre>cd athenium
 git init
 git add .
-git commit -m "feat: Athenium v1.0 — transformer contract risk system"
+git commit -m "feat: Athenium v1.0"
 git branch -M main
 git remote add origin https://github.com/prajitdatta/athenium.git
 git push -u origin main</pre>
@@ -1248,7 +1339,7 @@ git push -u origin main</pre>
     <div class="step">
       <div class="step-num">3</div>
       <div>
-        <h4>Enable GitHub Pages (publishes this page)</h4>
+        <h4>Enable GitHub Pages</h4>
         <p style="color:var(--muted);font-size:12px">Settings → Pages → Source: Deploy from branch → Branch: main → Folder: / (root) → Save. Wait ~60 seconds.</p>
         <p style="color:var(--muted);font-size:12px;margin-top:8px">This page will be live at: <strong>https://prajitdatta.github.io/athenium/pipeline.html</strong></p>
       </div>
@@ -1259,9 +1350,8 @@ git push -u origin main</pre>
         <h4>Set repository description and topics</h4>
         <p style="color:var(--muted);font-size:12px">Click ⚙️ next to About on the repo page.</p>
         <p style="color:var(--muted);font-size:12px;margin-top:6px"><strong>Description:</strong> Production transformer system for financial contract risk classification — attention from scratch, QLoRA fine-tuning, calibrated evaluation, FastAPI serving</p>
-        <p style="color:var(--muted);font-size:12px;margin-top:6px"><strong>Topics:</strong></p>
-        <div style="margin-top:8px">
-          <span class="tag">transformer</span><span class="tag">pytorch</span><span class="tag">lora</span><span class="tag">qlora</span><span class="tag">nlp</span><span class="tag">financial-nlp</span><span class="tag">attention</span><span class="tag">peft</span><span class="tag">mistral</span><span class="tag">fastapi</span><span class="tag">layer-norm</span><span class="tag">positional-encoding</span>
+        <div style="margin-top:8px;flex-wrap:wrap">
+          <span class="tag">transformer</span><span class="tag">pytorch</span><span class="tag">lora</span><span class="tag">qlora</span><span class="tag">nlp</span><span class="tag">financial-nlp</span><span class="tag">attention</span><span class="tag">peft</span><span class="tag">mistral</span><span class="tag">fastapi</span><span class="tag">layer-norm</span>
         </div>
       </div>
     </div>
@@ -1278,22 +1368,17 @@ git push -u origin main</pre>
 <!-- ══════════════════ FOOTER ══════════════════ -->
 <footer>
   <div class="footer-top">
-    <!-- Brand -->
     <div class="footer-brand">
       <div class="footer-brand-logo">Athe<span>nium</span></div>
       <div class="footer-brand-desc">Contract Risk Intelligence · Mistral-7B · QLoRA · FastAPI · Built from first principles.</div>
-      <div style="margin-top:20px">
-        <div class="footer-author">
-          <img class="footer-author-avatar" src="https://miro.medium.com/v2/resize:fit:720/1*MdnNYjKSzZuwgmGDDlkh3w.png" alt="Prajit Datta">
-          <div>
-            <div class="footer-author-name">Prajit <span>Datta</span></div>
-            <div class="footer-author-role">AI Research Scientist · AFRY, Sweden<br>TEDx · Forbes Tech Council · WEF Global Shaper</div>
-          </div>
+      <div class="footer-author">
+        <img class="footer-author-avatar" src="https://miro.medium.com/v2/resize:fit:720/1*MdnNYjKSzZuwgmGDDlkh3w.png" alt="Prajit Datta">
+        <div>
+          <div class="footer-author-name">Prajit <span>Datta</span></div>
+          <div class="footer-author-role">AI Research Scientist · AFRY, Sweden<br>TEDx · Forbes Tech Council · WEF Global Shaper</div>
         </div>
       </div>
     </div>
-
-    <!-- Links -->
     <div class="footer-col">
       <div class="footer-col-title">Project</div>
       <a href="#mechanism">Attention mechanism</a>
@@ -1303,8 +1388,6 @@ git push -u origin main</pre>
       <a href="#memory">GPU memory</a>
       <a href="#deploy">Deployment</a>
     </div>
-
-    <!-- Author links -->
     <div class="footer-col">
       <div class="footer-col-title">Prajit Datta</div>
       <a href="https://prajitdatta.github.io/" target="_blank">↗ Portfolio</a>
@@ -1315,7 +1398,6 @@ git push -u origin main</pre>
       <a href="https://prajitdatta.substack.com" target="_blank">↗ Substack</a>
     </div>
   </div>
-
   <div class="footer-bottom">
     <div class="footer-bottom-left">© 2026 Prajit Datta · MIT License · <em>"Technology becomes valuable when humans can rely on its behaviour."</em></div>
     <div class="footer-bottom-right">
@@ -1327,12 +1409,49 @@ git push -u origin main</pre>
 </footer>
 
 <script>
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
+// NAV HAMBURGER
+// ════════════════════════════════════════════════
+function toggleNav() {
+  const btn = document.getElementById('navHamburger');
+  const links = document.getElementById('navLinks');
+  btn.classList.toggle('open');
+  links.classList.toggle('open');
+}
+// Close nav when a link is clicked
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('navHamburger').classList.remove('open');
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// ════════════════════════════════════════════════
+// RESPONSIVE CANVAS DRAWING
+// ════════════════════════════════════════════════
+function getCanvasWidth(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return 380;
+  const parent = canvas.parentElement;
+  return parent ? Math.min(parent.clientWidth, 500) : 380;
+}
+
+function setCanvasSize(id, height) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const w = getCanvasWidth(id);
+  canvas.width = w;
+  canvas.height = height;
+  canvas.style.width = '100%';
+}
+
+// ════════════════════════════════════════════════
 // POSITIONAL ENCODING CANVAS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 function drawPE() {
   const canvas = document.getElementById('peCanvas');
   if (!canvas) return;
+  setCanvasSize('peCanvas', 200);
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   const rows = 16, cols = 64;
@@ -1346,16 +1465,15 @@ function drawPE() {
       const g = val > 0 ? Math.round(96 + val * 60) : Math.round(40 - val * 20);
       const b = val > 0 ? Math.round(32) : Math.round(107 + Math.abs(val) * 80);
       ctx.fillStyle = `rgb(${r},${g},${b})`;
-      ctx.fillRect(dim * cw, pos * ch, cw - 0.5, ch - 0.5);
+      ctx.fillRect(dim * cw, pos * ch, cw, ch);
     }
   }
 }
-drawPE();
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // ATTENTION HEATMAP
-// ════════════════════════════════════════════════════════
-const clause = ["The", "Borrower", "shall", "not", "declare", "any", "Event", "of", "Default", "without", "consent"];
+// ════════════════════════════════════════════════
+const clause = ["The","Borrower","shall","not","declare","any","Event","of","Default","without","consent"];
 const attnPatterns = {
   "The":      [0.25,0.18,0.08,0.04,0.05,0.04,0.12,0.04,0.10,0.06,0.04],
   "Borrower": [0.06,0.28,0.10,0.05,0.08,0.03,0.10,0.04,0.14,0.08,0.04],
@@ -1411,12 +1529,13 @@ function selectToken(tok, el) {
 buildAttnUI();
 setTimeout(() => { const el = document.querySelectorAll('.attn-token')[6]; if (el) selectToken('Event', el); }, 500);
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // RESIDUAL STREAM CANVAS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 function drawResidual() {
   const canvas = document.getElementById('residualCanvas');
   if (!canvas) return;
+  setCanvasSize('residualCanvas', 160);
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
@@ -1426,16 +1545,16 @@ function drawResidual() {
     prenormData.push(1.0 + 0.25 * Math.sin(i * 0.8) + 0.1 * Math.random());
     postnormData.push(Math.pow(1.08, i) * (0.9 + 0.1 * Math.random()));
   }
-  const pad = 30;
+  const pad = { l:30, r:10, t:16, b:26 };
   const maxVal = Math.max(...postnormData);
-  const scaleY = (H - pad * 2) / maxVal;
-  const scaleX = (W - pad * 2) / (layers - 1);
-  function toX(i) { return pad + i * scaleX; }
-  function toY(v) { return H - pad - v * scaleY; }
+  const scaleY = (H - pad.t - pad.b) / maxVal;
+  const scaleX = (W - pad.l - pad.r) / (layers - 1);
+  function toX(i) { return pad.l + i * scaleX; }
+  function toY(v) { return H - pad.b - v * scaleY; }
   ctx.strokeStyle = '#E8E2D8'; ctx.lineWidth = 0.5;
   for (let v = 0; v <= 10; v++) {
-    const y = toY(v); if (y < pad) continue;
-    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W - pad, y); ctx.stroke();
+    const y = toY(v); if (y < pad.t) continue;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
   }
   ctx.beginPath(); ctx.strokeStyle = '#C07070'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
   postnormData.forEach((v, i) => i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)));
@@ -1443,19 +1562,17 @@ function drawResidual() {
   ctx.beginPath(); ctx.strokeStyle = '#8B6020'; ctx.lineWidth = 2;
   prenormData.forEach((v, i) => i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)));
   ctx.stroke();
-  ctx.font = '10px DM Mono, monospace';
-  ctx.fillStyle = '#8B6020'; ctx.fillText('Pre-norm (Athenium)', pad + 4, toY(prenormData[layers-1]) - 6);
-  ctx.fillStyle = '#C07070'; ctx.fillText('Post-norm', pad + 4, toY(postnormData[8]) - 6);
-  ctx.fillStyle = '#8C8270'; ctx.font = '9px DM Mono, monospace';
-  ctx.fillText('Layer 0', pad, H - 8); ctx.fillText('Layer 32', W - 48, H - 8);
-  ctx.save(); ctx.translate(12, H/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('Activation norm', -30, 0); ctx.restore();
+  ctx.font = '9px DM Mono, monospace';
+  ctx.fillStyle = '#8B6020'; ctx.fillText('Pre-norm (Athenium)', pad.l + 4, toY(1.3) - 4);
+  ctx.fillStyle = '#C07070'; ctx.fillText('Post-norm', pad.l + 4, toY(postnormData[8]) - 4);
+  ctx.fillStyle = '#8C8270';
+  ctx.fillText('L0', pad.l, H - 6);
+  ctx.fillText('L32', W - 28, H - 6);
 }
-drawResidual();
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // NORMALISATION GRID
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 const normData = [
   [1.2,-0.5,2.1,0.3,-1.8,0.9,1.5,-0.7],
   [0.8,1.4,-0.3,2.0,0.5,-1.2,0.7,1.9],
@@ -1479,7 +1596,7 @@ function buildNormGrid() {
     row.forEach((val, c) => {
       const cell = document.createElement('div');
       cell.id = `nc_${r}_${c}`;
-      cell.style.cssText = 'flex:1;height:28px;border-radius:2px;transition:background 0.5s;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,0.8)';
+      cell.style.cssText = 'flex:1;height:26px;border-radius:2px;transition:background 0.5s;display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,0.8);min-width:0';
       cell.textContent = val.toFixed(1);
       rowEl.appendChild(cell);
     });
@@ -1528,10 +1645,15 @@ function applyNormColours() {
 function drawNormCanvas(normed) {
   const canvas = document.getElementById('normCanvas');
   if (!canvas) return;
+  const parent = canvas.parentElement;
+  const w = parent ? parent.clientWidth - 2 : 340;
+  canvas.width = Math.max(w, 200);
+  canvas.height = 110;
+  canvas.style.width = '100%';
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const W = canvas.width, H = canvas.height;
-  const pad = { l:50, r:20, t:20, b:30 };
+  const pad = { l:36, r:10, t:14, b:26 };
   const cw = (W - pad.l - pad.r) / 8;
   const colors = ['#8B6020','#1A5C2A','#1A3A6B','#8B1E1E'];
   const labels = ['A','B','C','D'];
@@ -1545,18 +1667,16 @@ function drawNormCanvas(normed) {
   const zeroY = toY(0);
   ctx.beginPath(); ctx.setLineDash([3,3]); ctx.moveTo(pad.l, zeroY); ctx.lineTo(W-pad.r, zeroY); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.font = '9px DM Mono, monospace'; ctx.fillStyle = '#8C8270'; ctx.textAlign='center';
+  ctx.font = '8px DM Mono, monospace'; ctx.fillStyle = '#8C8270'; ctx.textAlign='center';
   for (let c = 0; c < 8; c++) ctx.fillText(`f${c}`, toX(c), H - 6);
   ctx.fillText('0', pad.l - 6, zeroY + 3); ctx.textAlign = 'left';
   normed.forEach((row, r) => {
     ctx.beginPath(); ctx.strokeStyle = colors[r]; ctx.lineWidth = 1.5;
     row.forEach((v, c) => c === 0 ? ctx.moveTo(toX(c), toY(v)) : ctx.lineTo(toX(c), toY(v)));
     ctx.stroke();
-    ctx.fillStyle = colors[r]; ctx.font = '9px DM Mono, monospace';
+    ctx.fillStyle = colors[r]; ctx.font = '8px DM Mono, monospace';
     ctx.fillText(labels[r], 4, toY(row[0]) + 4);
   });
-  ctx.fillStyle = '#8C8270'; ctx.font = '9px DM Mono, monospace';
-  ctx.fillText(normMode === 'batch' ? '← features normalised per column' : '← features normalised per row', pad.l + 4, H - pad.b - 4);
 }
 
 function showNorm(mode) {
@@ -1573,24 +1693,24 @@ function showNorm(mode) {
 }
 buildNormGrid();
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // GPU MEMORY BARS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 const memConfigs = {
   fp32: {
     total: '108 GB', note: 'Requires 2× A100 80GB or 4× A40 40GB. Not practical for rapid iteration.',
     bars: [
-      { label:'Model weights',      gb:27.3, pct:100, color:'#8B6020' },
-      { label:'Gradients',          gb:27.3, pct:100, color:'#C49030' },
-      { label:'Adam m (1st mom.)',  gb:27.3, pct:100, color:'#D4A840' },
-      { label:'Adam v (2nd mom.)',  gb:27.3, pct:100, color:'#E0BC60' },
-      { label:'Activations',        gb:6.0,  pct:22,  color:'#8C8270' },
+      { label:'Model weights',       gb:27.3, pct:100, color:'#8B6020' },
+      { label:'Gradients',           gb:27.3, pct:100, color:'#C49030' },
+      { label:'Adam m (1st mom.)',   gb:27.3, pct:100, color:'#D4A840' },
+      { label:'Adam v (2nd mom.)',   gb:27.3, pct:100, color:'#E0BC60' },
+      { label:'Activations',         gb:6.0,  pct:22,  color:'#8C8270' },
     ]
   },
   mixed: {
     total: '60 GB', note: 'bf16 weights halve the model memory. Adam states stay in fp32. Fits on 1× A100 80GB.',
     bars: [
-      { label:'Model weights (bf16)',gb:13.6, pct:50,  color:'#8B6020' },
+      { label:'Weights (bf16)',      gb:13.6, pct:50,  color:'#8B6020' },
       { label:'Gradients (fp32)',    gb:27.3, pct:100, color:'#C49030' },
       { label:'Adam m (fp32)',       gb:13.6, pct:50,  color:'#D4A840' },
       { label:'Adam v (fp32)',       gb:13.6, pct:50,  color:'#E0BC60' },
@@ -1601,7 +1721,7 @@ const memConfigs = {
     total: '18.4 GB', note: 'Fits on 1× A10G 24GB. Base model in 4-bit NF4. Only 8.4M LoRA params are trained.',
     bars: [
       { label:'Base model (NF4)',    gb:3.6,  pct:13,  color:'#8B6020' },
-      { label:'LoRA adapters (bf16)',gb:0.1,  pct:1,   color:'#1A5C2A' },
+      { label:'LoRA adapters',       gb:0.1,  pct:1,   color:'#1A5C2A' },
       { label:'Gradients (LoRA)',    gb:0.1,  pct:1,   color:'#C49030' },
       { label:'Adam m+v (LoRA)',     gb:0.2,  pct:1,   color:'#D4A840' },
       { label:'Activations',         gb:6.0,  pct:22,  color:'#8C8270' },
@@ -1627,9 +1747,9 @@ function showMemory(mode) {
 }
 showMemory('fp32');
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // RISK CLASSIFICATION DEMO
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 const clauses = [
   { text:'"The Borrower shall not declare any dividend if an Event of Default is continuing."', label:'HIGH', conf:0.923, proba:{LOW:0.004,MEDIUM:0.061,HIGH:0.923,CRITICAL:0.012}, attrib:[{t:'default',w:0.142},{t:'Event',w:0.138},{t:'dividend',w:0.091},{t:'Borrower',w:0.072},{t:'continuing',w:0.064}] },
   { text:'"Interest accrues at SOFR plus 2.5% per annum, calculated on a 30/360 day basis."', label:'LOW', conf:0.947, proba:{LOW:0.947,MEDIUM:0.041,HIGH:0.009,CRITICAL:0.003}, attrib:[{t:'SOFR',w:0.112},{t:'Interest',w:0.098},{t:'annum',w:0.087},{t:'accrues',w:0.071},{t:'basis',w:0.054}] },
@@ -1642,16 +1762,19 @@ function buildClausePicker() {
   if (!picker) return;
   clauses.forEach((c, i) => {
     const el = document.createElement('div');
-    el.className = 'demo-input';
-    el.innerHTML = `<span class="clause-label">Sample clause ${i+1} — click to classify</span>${c.text}`;
+    el.style.cssText = 'background:var(--paper2);border:1px solid var(--rule);padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--ink);line-height:1.7;cursor:pointer;transition:border-color 0.2s';
+    el.onmouseenter = () => el.style.borderColor = 'var(--gold2)';
+    el.onmouseleave = () => { if (!el.classList.contains('active')) el.style.borderColor = ''; }
+    el.innerHTML = `<span style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block">Sample clause ${i+1} — click to classify</span>${c.text}`;
     el.onclick = () => showRisk(c, el);
     picker.appendChild(el);
   });
 }
 
 function showRisk(clause, el) {
-  document.querySelectorAll('.demo-input').forEach(e => e.style.borderColor = '');
+  document.querySelectorAll('#clausePicker > div').forEach(e => { e.style.borderColor = ''; e.classList.remove('active'); });
   el.style.borderColor = 'var(--gold2)';
+  el.classList.add('active');
   const out = document.getElementById('riskOutput');
   out.style.display = 'block';
   const badge = document.getElementById('riskBadge');
@@ -1672,11 +1795,11 @@ function showRisk(clause, el) {
   });
 }
 buildClausePicker();
-setTimeout(() => { const first = document.querySelector('.demo-input'); if (first) showRisk(clauses[0], first); }, 300);
+setTimeout(() => { const first = document.querySelector('#clausePicker > div'); if (first) showRisk(clauses[0], first); }, 300);
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // SCROLL FADE IN
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1684,11 +1807,28 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.style.transform = 'translateY(0)';
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.05 });
 
 document.querySelectorAll('.section').forEach(s => {
   s.style.cssText += ';opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease';
   observer.observe(s);
+});
+
+// ════════════════════════════════════════════════
+// INITIAL DRAW + RESIZE HANDLER
+// ════════════════════════════════════════════════
+function drawAllCanvases() {
+  drawPE();
+  drawResidual();
+  applyNormColours();
+}
+
+drawAllCanvases();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawAllCanvases, 150);
 });
 </script>
 </body>
