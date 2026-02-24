@@ -300,10 +300,10 @@ athenium/
 ├── scripts/
 │   └── trace_attention.py              ← Attention trace through a contract clause
 ├── tests/
-│   ├── test_attention.py
-│   ├── test_embeddings.py
-│   ├── test_normalization.py
-│   └── test_gpu_memory.py
+    ├── test_attention.py
+    ├── test_embeddings.py
+    ├── test_normalization.py
+    └── test_gpu_memory.py
 
 ```
 
