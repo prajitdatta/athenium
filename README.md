@@ -320,44 +320,7 @@ athenium/
 └── docs/adrs/
 ```
 
----
 
-## Running It
-
-```bash
-git clone https://github.com/prajitdatta/athenium.git
-cd athenium
-pip install -r requirements.txt
-
-python scripts/trace_attention.py            # attention trace, no GPU needed
-python -m src.embeddings.positional_encoding # sinusoidal PE vs RoPE
-python -m src.internals.normalization        # BatchNorm vs LayerNorm
-python -m src.internals.gpu_memory           # full memory breakdown
-pytest tests/ -v                             # full test suite
-
-# Fine-tune (1× A10G, ~3h 45m)
-python -m src.finetune.train \
-  --model_id mistralai/Mistral-7B-v0.1 \
-  --train_data data/train.jsonl \
-  --val_data   data/val.jsonl
-
-# Serve
-python -m src.serving.api   # → http://localhost:8000/docs
-```
-
----
-
-## Deploying to GitHub
-
-```bash
-git init && git add .
-git commit -m "feat: Athenium v1.0"
-git branch -M main
-git remote add origin https://github.com/prajitdatta/athenium.git
-git push -u origin main
-```
-
-Enable **GitHub Pages** (Settings → Pages → Branch: main → root) and the pipeline explorer goes live at `https://prajitdatta.github.io/athenium/pipeline.html`.
 
 ---
 
