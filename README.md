@@ -17,7 +17,7 @@
 ---
 
 <div align="center">
-<a href="https://prajitdatta.github.io/athenium">Anthenium Website</a>
+<a href="https://prajitdatta.github.io/athenium">Athenium Website</a>
   
 *Built by [Prajit Datta](https://prajitdatta.github.io/) &nbsp;·&nbsp; [GitHub](https://github.com/prajitdatta)*
 
