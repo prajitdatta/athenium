@@ -7,7 +7,7 @@
 [![Transformers](https://img.shields.io/badge/🤗_Transformers-4.40-FFD21E)](https://huggingface.co/docs/transformers/index)
 [![PEFT](https://img.shields.io/badge/PEFT-0.10-7C3AED)](https://github.com/huggingface/peft)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22c55e)](LICENSE)
-[![Live Demo](https://img.shields.io/badge/🔬_Live-Pipeline_Explorer-0A0C0F?style=flat-square)](https://prajitdatta.github.io/athenium/pipeline.html)
+[![Live Demo](https://img.shields.io/badge/🔬_Live-Pipeline_Explorer-0A0C0F?style=flat-square)](https://prajitdatta.github.io/athenium/)
 [![Portfolio](https://img.shields.io/badge/🌐_Portfolio-prajitdatta.github.io-4F46E5?style=flat-square)](https://prajitdatta.github.io/)
 [![GitHub](https://img.shields.io/badge/GitHub-prajitdatta-181717?style=flat-square&logo=github)](https://github.com/prajitdatta)
 
